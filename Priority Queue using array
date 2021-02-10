@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+using namespace std;
+int Queue[100],Priority[100];
+int frontt=-1,rear=-1,n;
+
+void enqueue(int val,int p)
+{
+    if(rear==n-1)
+    {
+        printf("Overflow.\n");
+    }
+    else if(frontt==-1 && rear==-1)
+    {
+        frontt++;rear++;
+        Queue[rear]=val;
+        Priority[rear]=p;
+    }
+    else
+    {
+        int i=0;
+        rear++;
+        Queue[rear]=val;
+        Priority[rear]=p;
+        for(i=0;i<rear;i++)
+        {
+            if(Priority[i]>Priority[rear])
+            {
+                swap(Priority[rear],Priority[i]);
+                swap(Queue[rear],Queue[i]);
+            }
+        }
+    }
+}
+
+int dequeue()
+{
+    int value;
+    if(frontt==-1 && rear==-1)
+    {
+        printf("Underflow.\n");
+    }
+    else if(frontt==rear)
+    {
+        frontt=rear=-1;
+    }
+    else
+    {
+        delete &Queue[frontt];
+        delete &Priority[frontt];
+        frontt++;
+    }
+}
+void Display()
+{
+    int i;
+    if(frontt==-1 && rear==-1)
+    {
+        printf("Blank.\n");
+    }
+    else
+    {
+        for(i=frontt;i<=rear;i++)
+    {
+        printf("%d\n",Queue[i]);
+    }
+    }
+}
+void peek()
+{
+    if(frontt==-1 && rear==-1)
+    {
+        printf("Blank.\n");
+    }
+    else
+    {
+        printf("%d\n",Queue[frontt]);
+    }
+}
+int main()
+{
+    int i,dig,p;
+    cout<<"Insert input number \n";
+    cin>>n;
+    for(i=1;i<=n;i++)
+    {
+        cout<<"Input numbers and priorities\n";
+        cin>>dig>>p;
+        enqueue(dig,p);
+    }
+    Display();
+    cout<<"\n\n";
+    peek();
+    dequeue();
+    dequeue();
+    Display();
+    cout<<"\n\n";
+    peek();
+}
